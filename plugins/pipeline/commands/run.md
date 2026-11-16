@@ -26,15 +26,15 @@ Setup:
 Then run the protocol:
 
 3. Enter state PLANNING and dispatch the architect agent
-   (subagent_type `multi-agent-pipeline:architect`) with the project goal.
+   (subagent_type `pipeline:architect`) with the project goal.
    Do not proceed until TASKS.md exists and the response ends with
    ARCHITECTURE_READY.
 4. For each task in TASKS.md, run the CODING → REVIEWING loop: dispatch the
-   coder (`multi-agent-pipeline:coder`), then the code-reviewer
-   (`multi-agent-pipeline:code-reviewer`). On STATUS: REJECTED, count it and
+   coder (`pipeline:coder`), then the code-reviewer
+   (`pipeline:code-reviewer`). On STATUS: REJECTED, count it and
    re-dispatch the coder with the reviewer's exact fixes. After three
    consecutive rejections on the same task, escalate to the senior agent
-   (`multi-agent-pipeline:senior`) and follow its resolution.
+   (`pipeline:senior`) and follow its resolution.
 5. Never implement or fix code yourself — always dispatch agents. Track the
    active task, current state, and rejection count with your todo list, and
    report each state transition to the user in one line.

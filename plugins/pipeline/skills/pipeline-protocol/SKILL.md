@@ -14,10 +14,10 @@ confirmation is required during the pipeline.
 
 | Agent (subagent_type)      | Role                                   | Must NOT do              | Output contract                          |
 |----------------------------|----------------------------------------|--------------------------|------------------------------------------|
-| multi-agent-pipeline:architect      | architecture + TASKS.md       | write implementation code | ends with `ARCHITECTURE_READY`           |
-| multi-agent-pipeline:coder          | implement the active task     | redesign, touch unrelated files | ends with `IMPLEMENTATION_COMPLETE`|
-| multi-agent-pipeline:code-reviewer  | verify against acceptance criteria | modify production code | `STATUS: APPROVED` or `STATUS: REJECTED` + exact fixes |
-| multi-agent-pipeline:senior         | escalation after 3 consecutive rejections | redesign unrelated parts | `ROOT_CAUSE`, `DECISION`, `REQUIRED_CHANGES`, `VERIFICATION` + `ESCALATION_RESOLUTION_COMPLETE` |
+| pipeline:architect      | architecture + TASKS.md       | write implementation code | ends with `ARCHITECTURE_READY`           |
+| pipeline:coder          | implement the active task     | redesign, touch unrelated files | ends with `IMPLEMENTATION_COMPLETE`|
+| pipeline:code-reviewer  | verify against acceptance criteria | modify production code | `STATUS: APPROVED` or `STATUS: REJECTED` + exact fixes |
+| pipeline:senior         | escalation after 3 consecutive rejections | redesign unrelated parts | `ROOT_CAUSE`, `DECISION`, `REQUIRED_CHANGES`, `VERIFICATION` + `ESCALATION_RESOLUTION_COMPLETE` |
 
 Dispatch agents with the Task tool using these subagent_type names. If your
 Claude Code version exposes plugin agents without the plugin prefix, the bare

@@ -7,8 +7,8 @@
   },
   "plugins": [
     {
-      "name": "multi-agent-pipeline",
-      "source": "./plugins/multi-agent-pipeline",
+      "name": "pipeline",
+      "source": "./plugins/pipeline",
       "description": "Turns Claude Code into an autonomous multi-agent dev team with a state-machine orchestration protocol",
       "version": "1.0.0",
       "category": "development",

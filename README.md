@@ -2,27 +2,23 @@
 
 English | [مستندات فارسی](README.fa.md)
 
-Turn Claude Code into an autonomous multi-agent dev team. One command runs a
-full build pipeline: the **architect** plans, the **coder** implements, the
-**code-reviewer** verifies, and the **senior** agent unblocks deadlocks —
-no babysitting required.
+Turns Claude Code into a **multi-agent, multi-model — and free** coding team.
+One short command runs a full autonomous build pipeline: the **architect**
+plans, the **coder** implements, the **code-reviewer** verifies, and the
+**senior** agent unblocks deadlocks — no babysitting required.
+
+Through [9router](https://github.com/decolua/9router) combos, every agent can
+run on a different model — including completely free ones.
+
+![Agent map: the orchestrator dispatching subagents](docs/agent-map.png)
 
 ![Parallel subagents running in Claude Code](docs/parallel-agents.png)
-
-## Why
-
-In typical single-agent coding loops, the model that plans is the same model
-that writes and the same model that reviews — so drift goes unnoticed. This
-plugin separates the roles into four specialized subagents bound by a strict
-state machine. And with the **Combo** feature of
-[9router](https://github.com/decolua/9router), you can give each role its own
-model (strong models for judgment, cheap/free models for throughput).
 
 ## Install
 
 ```
 /plugin marketplace add YOUR_GITHUB_USERNAME/multi-agent-pipeline
-/plugin install multi-agent-pipeline@multi-agent-pipeline
+/plugin install pipeline@multi-agent-pipeline
 ```
 
 ## Quick start
@@ -30,8 +26,10 @@ model (strong models for judgment, cheap/free models for throughput).
 In any project:
 
 ```
-/multi-agent-pipeline:pipeline Build a snake game with HTML canvas and localStorage high scores
+/pipeline:run Build a snake game with HTML canvas and localStorage high scores
 ```
+
+Run it without arguments and it will ask you what to build.
 
 What happens:
 
@@ -59,14 +57,29 @@ PLANNING → CODING → REVIEWING ─┬─ APPROVED → next task → ... → A
 ```
 
 The protocol ships as a skill (`pipeline-protocol`) plus a slash command
-(`pipeline`), and is mirrored into your project's `CLAUDE.md` so every agent
-reads the same rules.
+(`run` → `/pipeline:run`), and is mirrored into your project's `CLAUDE.md` so
+every agent reads the same rules.
 
-## Give each agent a different model (advanced)
+## Make it multi-model (and free) with 9router
 
-By default everything works with standard Claude Code model aliases. To route
-each agent to different, cheaper, or free models through 9router's Combo
-feature, see [docs/9router-combo.md](docs/9router-combo.md).
+The plugin works with plain Claude Code out of the box. To give each agent a
+different model — or run the whole team on free models:
+
+1. Install 9router and open the dashboard (`npm i -g 9router`, then
+   `9router` → `http://localhost:20128`)
+2. Dashboard → **CLI Tools** → **Claude Code** — 9router writes the config
+   for you (`ANTHROPIC_BASE_URL`, `ANTHROPIC_AUTH_TOKEN`, and the
+   `ANTHROPIC_DEFAULT_*_MODEL` alias remaps)
+3. Dashboard → **Combos** → create two combos named exactly `sonnet` and
+   `opus`, each an ordered list of models with a fallback strategy
+4. Done — the agents' `model:` fields now route to your combos. Zero plugin
+   edits.
+
+Example: a free `sonnet` combo =
+`zai-org/glm-4.7-flash → groq/gpt-oss-120b → ollama/glm-4.7-flash`; a
+premium `opus` combo = your strongest reasoning model first.
+
+Full guide: [docs/9router-combo.md](docs/9router-combo.md)
 
 ## Permissions & safety
 
@@ -82,15 +95,14 @@ feature, see [docs/9router-combo.md](docs/9router-combo.md).
 
 ## Customization
 
-Fork the repo, edit
-`plugins/multi-agent-pipeline/agents/*.md` (models, tools, prompts), and
-install from your fork. Everything is plain Markdown — no build step.
+Fork the repo, edit `plugins/pipeline/agents/*.md` (models, tools, prompts),
+and install from your fork. Everything is plain Markdown — no build step.
 
 ## FAQ
 
 **Does it work without 9router?**
 Yes — with standard Claude Code models. 9router is optional, for multi-model
-routing.
+and free routing.
 
 **Where does `TASKS.md` come from?**
 The architect creates it in your project root on first run.

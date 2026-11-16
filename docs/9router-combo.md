@@ -1,4 +1,4 @@
-# Advanced: Multi-Model Routing with 9router
+# Advanced: Multi-Model (and Free) Routing with 9router
 
 The pipeline works out of the box with plain Claude Code: the agents use the
 standard model aliases (`inherit`, `sonnet`, `opus`). The real payoff of this
@@ -11,6 +11,7 @@ self-hosted AI router/proxy (dashboard + local API) that makes this easy. Its
 **Combo** feature chains multiple models/providers into one virtual model
 with automatic fallback or round-robin — and since a combo is just a model
 name, it pairs directly with the `model:` field in this plugin's agent files.
+Build your combos from free providers and the whole team runs for free.
 
 ## 1. Install 9router
 
@@ -22,79 +23,69 @@ npm install -g 9router
 The dashboard runs at `http://localhost:20128`; configuration lives in
 `~/.9router`.
 
-## 2. Add providers and models
+## 2. Let 9router configure Claude Code (CLI Tools)
 
-In the dashboard, connect the providers you actually have (Anthropic
-subscription, GLM, MiniMax, Kilocode, free tiers, ...). Send one test message
-per model to confirm it works before wiring it into a combo.
-
-## 3. Create combos
-
-Dashboard → **Combos** → Create New. A combo is an ordered list of models
-plus a strategy:
-
-| Combo name | Ordered models | Strategy |
-|------------|----------------|----------|
-| `planner`  | strongest reasoning model → cheaper fallback | Fallback |
-| `builder`  | cheap, fast coding model → free fallback     | Fallback |
-| `judge`    | strongest reasoning model                    | Fallback |
-
-- **Fallback**: try models in order; move to the next on error or quota
-  exhaustion.
-- **Round Robin / sticky**: rotate load across models or accounts.
-
-## 4. Connect Claude Code to 9router
-
-Either environment variables:
-
-```bash
-export ANTHROPIC_BASE_URL=http://127.0.0.1:20128
-export ANTHROPIC_API_KEY=9r_yourkey   # generate in the dashboard
-```
-
-or `~/.claude/config.json`:
+In the dashboard, open **CLI Tools → Claude Code** (available when Claude
+Code is installed). 9router generates the config for you — an `env` block
+like this:
 
 ```json
 {
-  "anthropic_api_base": "http://localhost:20128/v1",
-  "anthropic_api_key": "your-9router-api-key"
+  "env": {
+    "ANTHROPIC_BASE_URL": "http://127.0.0.1:20128/v1",
+    "ANTHROPIC_AUTH_TOKEN": "<9router api key>",
+    "ANTHROPIC_DEFAULT_FABLE_MODEL": "claude",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "opus",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "sonnet",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-4-5-20251001"
+  }
 }
 ```
 
-9router handles the Anthropic ↔ OpenAI ↔ Gemini format translation, so Claude
-Code talks to it as if it were the Anthropic API.
+That is: Claude Code talks to 9router as if it were the Anthropic API, and
+the standard aliases (`sonnet`, `opus`, `haiku`, ...) are remapped to the
+model/combo names you choose. 9router handles the Anthropic ↔ OpenAI ↔ Gemini
+format translation.
 
-## 5. Point the pipeline agents at your combos
+## 3. Create combos named exactly `sonnet` and `opus`
 
-Pick **one** of the following:
+Dashboard → **Combos** → Create New. A combo is an ordered list of models
+plus a strategy (**Fallback** = try in order, move to the next on error or
+quota exhaustion; **Round Robin** = rotate load).
 
-**Option A — direct (recommended):** fork this repo and set the agents'
-`model:` fields to your combo names:
+The trick: **name the combos exactly like the alias names** in the env remap
+(`sonnet`, `opus`). Then the plugin's default agent files route to your
+combos with zero edits:
 
-```yaml
-# agents/coder.md
-model: builder
+| Combo name | Used by | Example contents |
+|------------|---------|------------------|
+| `opus`     | senior agent (and anything on `opus`) | strongest reasoning model first, cheaper fallback — e.g. `cx/gpt-5.6-terra[1m]` → `cx/gpt-5.6-luna` |
+| `sonnet`   | coder agent (and anything on `sonnet`) | cheap/fast/free models — e.g. `cf/zai-org/glm-4.7-flash` → `groq/openai/gpt-oss-120b` → `ollama/glm-4.7-flash` |
+
+Everything on `inherit` (architect, code-reviewer, and the main orchestrator
+loop) keeps using whatever model your main Claude Code session runs on — set
+that combo/model in the dashboard too if you want.
+
+A fully free example: build `sonnet` from free tiers (GLM flash, `gpt-oss`
+on Groq, a local Ollama model) and `opus` from your best free reasoning
+model — the pipeline then costs nothing.
+
+## 4. That's it
+
+Send one test message per combo to confirm routing, then just run:
+
+```
+/pipeline:run Your project goal
 ```
 
-**Option B — alias shadowing:** name your combos `sonnet` and `opus`, and the
-plugin's default agent files route to them with zero edits.
+## Alternatives (optional)
 
-**Option C — environment remap:**
+You don't have to shadow the alias names:
 
-```bash
-export ANTHROPIC_DEFAULT_SONNET_MODEL=builder
-export ANTHROPIC_DEFAULT_OPUS_MODEL=planner
-```
-
-## Example budget setup
-
-| Pipeline role | Model policy |
-|---------------|--------------|
-| main loop (orchestrator) | mid-tier — it only dispatches and tracks state |
-| architect | strongest reasoning you can afford |
-| coder | cheap + fast, with a free-tier fallback |
-| code-reviewer | strong — a weak reviewer ruins the pipeline |
-| senior | strongest — it runs rarely, so cost is negligible |
+- **Direct:** fork the repo and set the agents' `model:` fields to any combo
+  name you created (e.g. `model: builder`).
+- **Custom remap:** point the env vars at different combo names, e.g.
+  `ANTHROPIC_DEFAULT_SONNET_MODEL=builder`.
 
 ## Notes and troubleshooting
 
