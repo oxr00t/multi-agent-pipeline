@@ -111,6 +111,25 @@ The architect creates it in your project root on first run.
 Yes — the agents work individually too (see `/agents`), but the pipeline
 protocol is what ties them together.
 
+## Support the project 💖
+
+Multi-Agent Pipeline is free and open source — and it will stay that way.
+It saves you real time and real token costs on every run: an architect that
+actually plans, a reviewer that actually blocks bad code, and an entire team
+you can run on free models. If it made your Claude Code far more capable —
+or cut your model bill — consider supporting development. Every contribution
+keeps the agents getting smarter.
+
+| Network | Type | Address |
+|---|---|---|
+| Tron | TRC20 | `TTwRaiji2AxAJnxnAoAjse3x7oqQUfcSZM` |
+| GRAM (TON) | GRAM (TON) | `UQA_YKoZvzl7bvRexWhF9CslqRjQ_AzkOA5sg-fJaijhD9DI` |
+| BNB Smart Chain | BEP20 | `0x02d1537479c88f50B627A1e8D268C246Cc866b99` |
+| Ethereum | ERC20 | `0x02d1537479c88f50B627A1e8D268C246Cc866b99` |
+
+> Every donation goes straight into more models, more agents and more
+> features. Thank you! 🙏
+
 ## License
 
 MIT
