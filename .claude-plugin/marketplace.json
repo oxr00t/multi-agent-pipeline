@@ -1,0 +1,18 @@
+{
+  "name": "multi-agent-pipeline",
+  "description": "Autonomous multi-agent development pipeline for Claude Code: architect, coder, code-reviewer and senior escalation agents",
+  "version": "1.0.0",
+  "owner": {
+    "name": "YOUR_GITHUB_USERNAME"
+  },
+  "plugins": [
+    {
+      "name": "multi-agent-pipeline",
+      "source": "./plugins/multi-agent-pipeline",
+      "description": "Turns Claude Code into an autonomous multi-agent dev team with a state-machine orchestration protocol",
+      "version": "1.0.0",
+      "category": "development",
+      "keywords": ["multi-agent", "pipeline", "orchestration", "subagents", "autonomous"]
+    }
+  ]
+}
