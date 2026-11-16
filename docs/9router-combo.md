@@ -75,7 +75,7 @@ model — the pipeline then costs nothing.
 Send one test message per combo to confirm routing, then just run:
 
 ```
-/pipeline:run Your project goal
+/pipeline:team Your project goal
 ```
 
 ## Alternatives (optional)

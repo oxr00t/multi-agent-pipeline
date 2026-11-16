@@ -24,7 +24,7 @@
 در هر پروژه:
 
 ```
-/pipeline:run یک بازی مار با HTML canvas و ذخیره‌ی رکورد در localStorage بساز
+/pipeline:team یک بازی مار با HTML canvas و ذخیره‌ی رکورد در localStorage بساز
 ```
 
 اگر بدون آرگومان بزنی، خودش می‌پرسد چه چیزی بسازد.
@@ -53,7 +53,7 @@ PLANNING → CODING → REVIEWING ─┬─ APPROVED → تسک بعدی → ...
                                └─ REJECTED → RETRYING ─┬─ (رد سوم) → ESCALATING → ...
 ```
 
-پروتکل به‌صورت یک اسکیل (`pipeline-protocol`) و یک کامند (`run` یعنی `/pipeline:run`) عرضه می‌شود و در `CLAUDE.md` پروژه هم منعکس می‌شود تا همه‌ی ایجنت‌ها قواعد یکسانی بخوانند.
+پروتکل به‌صورت یک اسکیل (`pipeline-protocol`) و یک کامند (`team` یعنی `/pipeline:team`) عرضه می‌شود و در `CLAUDE.md` پروژه هم منعکس می‌شود تا همه‌ی ایجنت‌ها قواعد یکسانی بخوانند.
 
 ## چندمدلی (و رایگان) با 9router
 

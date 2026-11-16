@@ -26,7 +26,7 @@ run on a different model — including completely free ones.
 In any project:
 
 ```
-/pipeline:run Build a snake game with HTML canvas and localStorage high scores
+/pipeline:team Build a snake game with HTML canvas and localStorage high scores
 ```
 
 Run it without arguments and it will ask you what to build.
@@ -57,7 +57,7 @@ PLANNING → CODING → REVIEWING ─┬─ APPROVED → next task → ... → A
 ```
 
 The protocol ships as a skill (`pipeline-protocol`) plus a slash command
-(`run` → `/pipeline:run`), and is mirrored into your project's `CLAUDE.md` so
+(`team` → `/pipeline:team`), and is mirrored into your project's `CLAUDE.md` so
 every agent reads the same rules.
 
 ## Make it multi-model (and free) with 9router
