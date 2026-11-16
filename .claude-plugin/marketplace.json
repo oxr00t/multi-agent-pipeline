@@ -3,7 +3,7 @@
   "description": "Autonomous multi-agent development pipeline for Claude Code: architect, coder, code-reviewer and senior escalation agents",
   "version": "1.0.0",
   "owner": {
-    "name": "YOUR_GITHUB_USERNAME"
+    "name": "oxr00t"
   },
   "plugins": [
     {

@@ -4,7 +4,7 @@
   "description": "Turns Claude Code into an autonomous multi-agent dev team: architect, coder, code-reviewer and senior escalation agents working through a state-machine pipeline.",
   "version": "1.0.0",
   "author": {
-    "name": "YOUR_GITHUB_USERNAME"
+    "name": "oxr00t"
   },
   "license": "MIT",
   "keywords": ["multi-agent", "pipeline", "orchestration", "subagents", "autonomous"]

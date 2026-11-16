@@ -15,7 +15,7 @@
 ## نصب
 
 ```
-/plugin marketplace add YOUR_GITHUB_USERNAME/multi-agent-pipeline
+/plugin marketplace add oxr00t/multi-agent-pipeline
 /plugin install pipeline@multi-agent-pipeline
 ```
 
